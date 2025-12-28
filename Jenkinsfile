@@ -4,23 +4,24 @@ pipeline {
     stages {
         stage('Build Java') {
             steps {
-                echo "Build java project"
+                echo "Build Java project"
                 sh 'mvn clean package'
             }
+        }
+
         stage('Build Docker Image') {
             steps {
-                echo "Building docker image"
+                echo "Building Docker image"
                 sh 'docker build -t muddanadevops/helloworld:latest .'
                 sh 'docker push muddanadevops/helloworld:latest'
             }
         }
+
         stage('Deploy to Kubernetes') {
             steps {
-                echo "deploying into kubernetes pods"
+                echo "Deploying into Kubernetes pods"
                 sh 'kubectl apply -f deployment.yaml'
             }
-
-        }
         }
     }
 }
